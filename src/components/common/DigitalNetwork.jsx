@@ -121,12 +121,14 @@ export function DigitalNetwork({
     { id: 'p2', d: 'M 430 96 L 168 356 L 268 426', delay: 1.6 },
   ];
 
+  const sizeClass = variant === 'hero' ? 'max-w-full' : 'max-w-[min(100%,560px)]';
+
   return (
     <div
       ref={ref}
       onMouseMove={canInteract ? onMove : undefined}
       onMouseLeave={canInteract ? onLeave : undefined}
-      className={cn('relative aspect-square w-full max-w-[min(100%,560px)]', className)}
+      className={cn('relative aspect-square w-full', sizeClass, className)}
       aria-hidden="true"
     >
       <motion.svg
