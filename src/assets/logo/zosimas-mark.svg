@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="ZOSIMAS">
+  <rect x="1" y="1" width="46" height="46" rx="10" fill="#F5F8FC" stroke="#D5DEEA"/>
+  <path d="M12 15h24L14 33h22" fill="none" stroke="#0B2855" stroke-width="3.2" stroke-linejoin="miter" stroke-linecap="square"/>
+  <path d="M12 15h24L14 33h22" fill="none" stroke="#18C7C0" stroke-width="1.1"/>
+  <circle cx="12" cy="15" r="2.1" fill="#0B2855"/>
+  <circle cx="36" cy="15" r="2.1" fill="#13B8B2"/>
+  <circle cx="14" cy="33" r="2.1" fill="#13B8B2"/>
+  <circle cx="36" cy="33" r="2.1" fill="#0B2855"/>
+  <circle cx="24" cy="24" r="1.6" fill="#18C7C0"/>
+</svg>

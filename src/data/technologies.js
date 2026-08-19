@@ -1,0 +1,51 @@
+export const technologies = [
+  {
+    id: 'frontend',
+    name: 'Frontend',
+    description: 'Interfaces that are structured, accessible, and built to last.',
+    items: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
+    icon: 'layout',
+  },
+  {
+    id: 'backend',
+    name: 'Backend',
+    description: 'APIs and services designed around real operational flows.',
+    items: ['Node.js', 'Python', 'REST', 'Authentication'],
+    icon: 'server',
+  },
+  {
+    id: 'mobile',
+    name: 'Mobile',
+    description: 'Cross-platform products with a native sense of quality.',
+    items: ['React Native', 'Flutter', 'App workflows'],
+    icon: 'smartphone',
+  },
+  {
+    id: 'ai',
+    name: 'AI',
+    description: 'Applied intelligence with clear boundaries and human control.',
+    items: ['LLM integration', 'Retrieval', 'Evaluation'],
+    icon: 'sparkles',
+  },
+  {
+    id: 'cloud',
+    name: 'Cloud',
+    description: 'Environments that stay observable, repeatable, and secure.',
+    items: ['AWS', 'Containers', 'Managed services'],
+    icon: 'cloud',
+  },
+  {
+    id: 'database',
+    name: 'Database',
+    description: 'Data models that remain coherent as products evolve.',
+    items: ['PostgreSQL', 'Redis', 'Object storage'],
+    icon: 'database',
+  },
+  {
+    id: 'devops',
+    name: 'DevOps',
+    description: 'Release paths that keep quality visible and delivery calm.',
+    items: ['CI/CD', 'Docker', 'Monitoring'],
+    icon: 'git-branch',
+  },
+];
