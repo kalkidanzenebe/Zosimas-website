@@ -7,7 +7,9 @@ import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { useI18n } from '../hooks/useI18n';
 
 export default function Blog() {
-  const { t } = useI18n();
+  const { t, tx } = useI18n();
+  const featured = posts[0];
+  const rest = posts.slice(1);
 
   useDocumentMeta({
     title: t('blog.metaTitle'),
@@ -16,11 +18,22 @@ export default function Blog() {
 
   return (
     <>
-      <PageHero eyebrow={t('blog.eyebrow')} title={t('blog.title')} description={t('blog.description')} />
+      <PageHero
+        eyebrow={t('blog.eyebrow')}
+        title={t('blog.title')}
+        description={t('blog.description')}
+        image={featured?.image}
+        imageAlt={featured ? tx(featured.imageAlt) : ''}
+      />
       <section className="bg-page py-20">
         <Container>
+          {featured && (
+            <div className="mb-8">
+              <BlogCard post={featured} />
+            </div>
+          )}
           <div className="grid gap-6 md:grid-cols-2">
-            {posts.map((post) => (
+            {rest.map((post) => (
               <BlogCard key={post.slug} post={post} />
             ))}
           </div>

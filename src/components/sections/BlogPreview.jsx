@@ -9,7 +9,7 @@ export function BlogPreview() {
   const { t } = useI18n();
 
   return (
-    <section className="overflow-x-hidden bg-surface py-16 lg:flex lg:min-h-[80dvh] lg:flex-col lg:justify-center lg:py-16">
+    <section className="overflow-x-hidden bg-surface py-16 lg:flex lg:min-h-[80dvh] lg:flex-col lg:justify-center lg:py-16 dark:bg-page">
       <Container>
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading

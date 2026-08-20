@@ -11,7 +11,7 @@ export function SolutionsPreview() {
   const solutions = localizedSolutions(locale);
 
   return (
-    <section className="relative overflow-x-hidden bg-navy-dark py-16 text-white lg:flex lg:min-h-[100dvh] lg:flex-col lg:justify-center lg:py-16">
+    <section className="relative overflow-x-hidden bg-navy-dark py-16 text-white lg:flex lg:min-h-[100dvh] lg:flex-col lg:justify-center lg:py-16 dark:ring-1 dark:ring-inset dark:ring-white/10">
       <div className="pointer-events-none absolute -left-20 bottom-0 w-[420px] opacity-30">
         <DigitalNetwork variant="solutions" />
       </div>

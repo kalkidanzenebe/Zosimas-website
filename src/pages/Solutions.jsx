@@ -50,7 +50,7 @@ export default function Solutions() {
         </Container>
       </section>
 
-      <section className="relative overflow-hidden bg-navy-dark py-20 text-white">
+      <section className="relative overflow-hidden bg-navy-dark py-20 text-white dark:ring-1 dark:ring-inset dark:ring-white/10">
         <div className="pointer-events-none absolute inset-y-0 right-0 w-[480px] opacity-25">
           <DigitalNetwork variant="solutions" />
         </div>

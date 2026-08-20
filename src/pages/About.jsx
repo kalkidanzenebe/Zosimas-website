@@ -97,7 +97,7 @@ export default function About() {
         </Container>
       </section>
 
-      <section className="bg-navy-dark py-20 text-white">
+      <section className="bg-navy-dark py-20 text-white dark:ring-1 dark:ring-inset dark:ring-white/10">
         <Container>
           <SectionHeading
             light

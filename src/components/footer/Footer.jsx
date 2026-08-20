@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Linkedin } from 'lucide-react';
 import { company } from '../../data/navigation';
 import { Logo } from '../common/Logo';
 import { Container } from '../common/Container';
@@ -14,7 +15,7 @@ export function Footer() {
   const services = localizedServices(locale);
 
   return (
-    <footer className="relative overflow-hidden bg-navy-dark text-white">
+    <footer className="relative overflow-hidden bg-navy-dark text-white dark:border-t dark:border-white/10">
       <svg className="pointer-events-none absolute inset-x-0 top-0 h-24 w-full opacity-40" viewBox="0 0 1200 120" aria-hidden="true">
         <path d="M0 70 L180 40 L360 80 L540 30 L720 74 L900 28 L1080 66 L1200 44" fill="none" stroke="#13B8B2" strokeWidth="1" />
         <circle cx="180" cy="40" r="3" fill="#18C7C0" />
@@ -58,12 +59,37 @@ export function Footer() {
             <div>
               <h2 className="text-sm font-semibold text-white">{t('footer.contact')}</h2>
               <ul className="mt-4 space-y-2 text-sm text-white/65">
-                <li>{company.email}</li>
-                <li>{company.phone}</li>
-                <li>{company.address}</li>
                 <li>
-                  <span className="text-white/45">{t('footer.linkedin')} · </span>
-                  {company.linkedin}
+                  <a href={`mailto:${company.email}`} className="transition-colors hover:text-cyan">
+                    {company.email}
+                  </a>
+                </li>
+                <li>
+                  <a href={`tel:${company.phone}`} className="transition-colors hover:text-cyan">
+                    {company.phone}
+                  </a>
+                </li>
+                <li>{company.address}</li>
+                <li className="pt-1">
+                  {company.linkedin ? (
+                    <a
+                      href={company.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex h-9 w-9 items-center justify-center border border-white/20 text-white transition-colors hover:border-cyan hover:text-cyan"
+                      aria-label={t('footer.linkedin')}
+                    >
+                      <Linkedin className="h-4 w-4" />
+                    </a>
+                  ) : (
+                    <span
+                      className="inline-flex h-9 w-9 items-center justify-center border border-white/20 text-white/50"
+                      aria-label={t('footer.linkedin')}
+                      title={t('footer.linkedin')}
+                    >
+                      <Linkedin className="h-4 w-4" />
+                    </span>
+                  )}
                 </li>
               </ul>
             </div>

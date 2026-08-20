@@ -8,7 +8,7 @@ export function FinalCta() {
   const { t } = useI18n();
 
   return (
-    <section className="relative overflow-hidden bg-navy py-14 text-white sm:py-16">
+    <section className="relative overflow-hidden bg-navy py-14 text-white sm:py-16 dark:bg-navy-dark dark:ring-1 dark:ring-inset dark:ring-white/10">
       <Container className="relative text-center">
         <Reveal>
           <Badge light>{t('cta.eyebrow')}</Badge>

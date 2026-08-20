@@ -59,7 +59,7 @@ export function ServicesPreview() {
   };
 
   return (
-    <section className="relative flex min-h-[100dvh] flex-col justify-center overflow-x-hidden bg-navy-dark py-16 text-white lg:py-16">
+    <section className="relative flex min-h-[100dvh] flex-col justify-center overflow-x-hidden bg-navy-dark py-16 text-white lg:py-16 dark:ring-1 dark:ring-inset dark:ring-white/10">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(19,184,178,0.14),transparent_32%),radial-gradient(circle_at_88%_80%,rgba(24,199,192,0.1),transparent_28%)]" />
       <svg className="pointer-events-none absolute inset-x-0 top-0 h-32 w-full opacity-40" viewBox="0 0 1200 120" aria-hidden="true">
         <path d="M0 72 L160 40 L320 80 L500 28 L680 70 L860 32 L1040 64 L1200 44" fill="none" stroke="#13B8B2" strokeWidth="1" />

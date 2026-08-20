@@ -11,7 +11,7 @@ export function SolutionCard({ solution }) {
   return (
     <motion.article
       whileHover={prefersReduced ? undefined : { y: -4 }}
-      className="group relative overflow-hidden border border-white/10 bg-navy-dark/40 p-7 transition-colors duration-300 hover:border-cyan/40 hover:bg-navy-mid/40"
+      className="group relative overflow-hidden border border-white/10 bg-navy-dark/40 p-7 transition-colors duration-300 hover:border-cyan/40 hover:bg-navy-mid/40 dark:bg-card dark:hover:bg-surface"
     >
       <div className="mb-10 flex items-start justify-between">
         <span className="text-cyan">

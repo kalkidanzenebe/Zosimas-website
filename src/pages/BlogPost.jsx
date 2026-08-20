@@ -5,7 +5,7 @@ import { Container } from '../components/common/Container';
 import { Button } from '../components/common/Button';
 import { FinalCta } from '../components/sections/FinalCta';
 import { getPostBySlug, posts } from '../data/posts';
-import { BlogCard } from '../components/cards/BlogCard';
+import { BlogCard, RemoteImage } from '../components/cards/BlogCard';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { useI18n } from '../hooks/useI18n';
 import { formatDateLabel } from '../lib/utils';
@@ -44,6 +44,8 @@ export default function BlogPost() {
         eyebrow={`${tx(post.category)} · ${tx(post.readTime)}`}
         title={tx(post.title)}
         description={tx(post.excerpt)}
+        image={post.image}
+        imageAlt={tx(post.imageAlt)}
       />
       <section className="bg-page py-16">
         <Container className="max-w-3xl">
@@ -54,8 +56,8 @@ export default function BlogPost() {
           <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-teal">
             {t('blog.published')} · {formatDateLabel(post.date, locale)}
           </p>
-          <div className="mt-8 overflow-hidden">
-            <img src={post.image} alt={tx(post.imageAlt)} className="aspect-[16/8] w-full object-cover" />
+          <div className="mt-8 overflow-hidden border border-line">
+            <RemoteImage src={post.image} alt={tx(post.imageAlt)} className="aspect-[16/8] min-h-[280px] w-full object-cover" />
           </div>
           <div className="mt-10 space-y-6">
             {post.body.map((block, index) =>

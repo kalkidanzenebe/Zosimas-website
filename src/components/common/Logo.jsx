@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
-import logoSrc from '../../assets/logo/logo.jpg';
+import logoSrc from '../../assets/logo/logo.png';
 import { useI18n } from '../../hooks/useI18n';
 
 export function LogoMark({ className }) {

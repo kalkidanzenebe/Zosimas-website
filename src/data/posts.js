@@ -12,10 +12,10 @@ export const posts = [
       en: 'Most organizations do not need another application. They need the work they already do to move through one coherent digital path.',
       am: 'አብዛኛዎቹ ድርጅቶች ሌላ መተግበሪያ አያስፈልጋቸውም። አስቀድመው የሚሠሩት ሥራ በአንድ ግልጽ የዲጂታል መንገድ እንዲያልፍ ያስፈልጋቸዋል።',
     },
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80',
     imageAlt: {
-      en: 'Network cables and structured infrastructure',
-      am: 'የአውታረ መረብ ገመዶች እና የተዋቀረ መሠረተ ልማት',
+      en: 'Earth seen from space, representing connected digital systems',
+      am: 'ከህዋ የታየች ምድር፣ የተያያዙ የዲጂታል ሥርዓቶችን የሚወክል',
     },
     body: [
       {
@@ -61,10 +61,10 @@ export const posts = [
       en: 'Intelligence is useful when it shortens a known task, keeps a human in control, and can be explained after the fact.',
       am: 'ብልህነት የታወቀን ሥራ ሲያሳጥር፣ ሰውን በቁጥጥር ሲያቆይ እና ከኋላ ሊገለጽ ሲችል ጠቃሚ ነው።',
     },
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1600&q=80',
+    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1400&q=80',
     imageAlt: {
-      en: 'Abstract visualization of artificial intelligence',
-      am: 'የሰው ሰራሽ ብልህነት ረቂቅ ምስላዊነት',
+      en: 'Abstract artificial intelligence visualization',
+      am: 'የሰው ሰራሽ ብልህነት ረቂቅ ምስል',
     },
     body: [
       {
@@ -110,10 +110,10 @@ export const posts = [
       en: 'A public grievance system only works if a resident can see what happened after they spoke — and if staff can act on a complete record.',
       am: 'የህዝብ ቅሬታ ሥርዓት የሚሠራው ነዋሪ ከተናገረ በኋላ ምን እንደሆነ ሲያይ ብቻ ነው — እና ሠራተኞች በሙሉ መዝገብ ላይ ሊሠሩ ሲችሉ።',
     },
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80',
+    image: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1400&q=80',
     imageAlt: {
-      en: 'Modern civic architecture',
-      am: 'ዘመናዊ የከተማ ሕንፃ',
+      en: 'Night city skyline representing public digital platforms',
+      am: 'የህዝብ የዲጂታል መድረኮችን የሚወክል የሌሊት የከተማ ሰማይ መስመር',
     },
     body: [
       {
@@ -159,10 +159,10 @@ export const posts = [
       en: 'Longevity is a product decision. Architecture, naming, and delivery discipline decide whether a system can still be changed after launch.',
       am: 'ረጅም ዕድሜ የምርት ውሳኔ ነው። አርክቴክቸር፣ ስም መስጠት እና የማቅረብ ዲሲፕሊን ሥርዓት ከመጀመሪያ በኋላ ሊቀየር ይችል እንደሆነ ይወስናሉ።',
     },
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1600&q=80',
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1400&q=80',
     imageAlt: {
-      en: 'Software engineering on a development screen',
-      am: 'በልማት ማያ ገጽ ላይ የሶፍትዌር ምህንድስና',
+      en: 'Code on a dark editor screen',
+      am: 'በጨለማ የአርታዒ ማያ ገጽ ላይ ኮድ',
     },
     body: [
       {

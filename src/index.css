@@ -24,13 +24,16 @@
 
 html.dark {
   color-scheme: dark;
-  --color-page: #071b3a;
-  --color-card: #0b2855;
-  --color-surface: #0a234d;
-  --color-ink: #e8eef6;
-  --color-muted: #9bb0c9;
-  --color-line: #1e3f6c;
-  --color-line-strong: #2a5488;
+  --color-page: #0a0c10;
+  --color-card: #171c24;
+  --color-surface: #11151b;
+  --color-ink: #f3f6f9;
+  --color-muted: #9aa8b8;
+  --color-line: #2c3542;
+  --color-line-strong: #3d4a5c;
+  --color-navy-dark: #1a222e;
+  --color-navy-mid: #243044;
+  --color-navy-soft: #2c3a4d;
 }
 
 html[lang="am"] body {
@@ -80,9 +83,9 @@ body {
   overflow-x: hidden;
 }
 
-::selection {
-  background: color-mix(in srgb, var(--color-teal) 28%, white);
-  color: var(--color-navy-dark);
+html.dark ::selection {
+  background: color-mix(in srgb, var(--color-teal) 42%, black);
+  color: white;
 }
 
 :focus-visible {

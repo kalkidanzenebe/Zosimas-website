@@ -70,7 +70,7 @@ export function AboutPreview() {
                   {t('homeAbout.missionBody')}
                 </p>
               </Reveal>
-              <Reveal delay={0.14} className="border-l-2 border-navy bg-navy p-6 text-white">
+              <Reveal delay={0.14} className="border-l-2 border-navy bg-navy p-6 text-white dark:border-cyan dark:bg-navy-dark">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan">{t('homeAbout.vision')}</p>
                 <p className="mt-3 text-sm leading-relaxed text-white/75">
                   {t('homeAbout.visionBody')}

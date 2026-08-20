@@ -11,7 +11,7 @@ export function ProjectCard({ project, className, compact = false }) {
       layout={!compact}
       whileHover={prefersReduced ? undefined : { y: compact ? -3 : -6 }}
       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-      className={cn('group overflow-hidden border border-line bg-card', className)}
+      className={cn('group overflow-hidden border border-line bg-card dark:bg-surface', className)}
     >
       <Link to="/projects" className="block">
         <div className="relative overflow-hidden bg-navy-dark">

@@ -3,10 +3,10 @@ export const company = {
   shortName: 'ZOSIMAS',
   brandLine: 'WEB • MOBILE • AI',
   tagline: 'Innovate. Build. Transform.',
-  email: '[Company Email]',
-  phone: '[Phone Number]',
-  address: '[Company Address]',
-  linkedin: '[LinkedIn URL]',
+  email: 'hello@zosimas.et',
+  phone: '+251959297682',
+  address: 'Addis Ababa, Ethiopia',
+  linkedin: '',
 };
 
 export const navItems = [

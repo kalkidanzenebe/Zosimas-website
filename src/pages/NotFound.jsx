@@ -13,7 +13,7 @@ export default function NotFound() {
   });
 
   return (
-    <section className="flex min-h-[80vh] items-center bg-navy-dark pt-28 text-white">
+    <section className="flex min-h-[80vh] items-center bg-navy-dark pt-28 text-white dark:ring-1 dark:ring-inset dark:ring-white/10">
       <Container className="grid items-center gap-10 lg:grid-cols-2">
         <div>
           <p className="text-xs font-semibold tracking-[0.22em] text-cyan">404</p>
