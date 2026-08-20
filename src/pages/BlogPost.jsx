@@ -4,21 +4,30 @@ import { PageHero } from '../components/common/PageHero';
 import { Container } from '../components/common/Container';
 import { Button } from '../components/common/Button';
 import { FinalCta } from '../components/sections/FinalCta';
-import { getPostBySlug, posts } from '../data/posts';
 import { BlogCard, RemoteImage } from '../components/cards/BlogCard';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { useI18n } from '../hooks/useI18n';
+import { usePublishedPost, usePublishedPosts } from '../hooks/usePosts';
 import { formatDateLabel } from '../lib/utils';
 
 export default function BlogPost() {
   const { slug } = useParams();
   const { locale, t, tx } = useI18n();
-  const post = getPostBySlug(slug);
+  const { post, loading } = usePublishedPost(slug);
+  const { posts } = usePublishedPosts();
 
   useDocumentMeta({
     title: post ? t('meta.postTitle', { title: tx(post.title) }) : t('blog.notFoundTitle'),
     description: post ? tx(post.excerpt) : t('blog.notFoundBody'),
   });
+
+  if (loading) {
+    return (
+      <>
+        <PageHero eyebrow={t('blog.eyebrow')} title={t('loading')} description="" />
+      </>
+    );
+  }
 
   if (!post) {
     return (

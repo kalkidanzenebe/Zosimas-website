@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String   @db.VarChar(255)
+  createdAt    DateTime @default(now())
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  slug        String    @unique @db.VarChar(191)
+  titleEn     String    @db.VarChar(500)
+  titleAm     String    @default("") @db.VarChar(500)
+  excerptEn   String    @db.Text
+  excerptAm   String    @db.Text
+  body        Json
+  categoryEn  String    @db.VarChar(191)
+  categoryAm  String    @default("") @db.VarChar(191)
+  image       String    @db.VarChar(2048)
+  imageAltEn  String    @default("") @db.VarChar(500)
+  imageAltAm  String    @default("") @db.VarChar(500)
+  readTimeEn  String    @default("5 min read") @db.VarChar(64)
+  readTimeAm  String    @default("") @db.VarChar(64)
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([published, publishedAt])
+}

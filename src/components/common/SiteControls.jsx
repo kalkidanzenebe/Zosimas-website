@@ -24,6 +24,11 @@ export function ThemeToggle({ inverted = false, className }) {
   );
 }
 
+const LANGUAGE_OPTIONS = [
+  { id: 'en', label: 'EN', lang: 'en', name: 'English' },
+  { id: 'am', label: 'አማ', lang: 'am', name: 'Amharic' },
+];
+
 export function LanguageToggle({ inverted = false, className }) {
   const { locale, setLocale, t } = useI18n();
 
@@ -37,18 +42,17 @@ export function LanguageToggle({ inverted = false, className }) {
         className,
       )}
     >
-      {[
-        { id: 'en', label: t('language.en') },
-        { id: 'am', label: t('language.am') },
-      ].map((option) => {
+      {LANGUAGE_OPTIONS.map((option) => {
         const active = locale === option.id;
         return (
           <button
             key={option.id}
             type="button"
+            lang={option.lang}
+            title={option.name}
             onClick={() => setLocale(option.id)}
             className={cn(
-              'min-w-10 px-2.5 text-xs font-semibold tracking-wide transition-colors',
+              'min-w-10 whitespace-nowrap px-2.5 text-xs font-semibold tracking-wide transition-colors',
               inverted
                 ? active
                   ? 'bg-white text-navy'
@@ -57,6 +61,7 @@ export function LanguageToggle({ inverted = false, className }) {
                   ? 'bg-navy text-white dark:bg-white dark:text-navy'
                   : 'text-ink/70 hover:text-ink',
             )}
+            aria-label={option.name}
             aria-pressed={active}
           >
             {option.label}

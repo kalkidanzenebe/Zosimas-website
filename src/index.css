@@ -36,7 +36,8 @@ html.dark {
   --color-navy-soft: #2c3a4d;
 }
 
-html[lang="am"] body {
+html[lang="am"] body,
+[lang="am"] {
   font-family: "Noto Sans Ethiopic", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
 

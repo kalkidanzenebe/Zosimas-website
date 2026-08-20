@@ -43,19 +43,19 @@ export function BlogCard({ post, compact = false }) {
   const readTime = tx(post.readTime);
 
   return (
-    <article className="group overflow-hidden border border-line bg-card">
-      <Link to={`/blog/${post.slug}`} className="block">
+    <article className="group h-full overflow-hidden border border-line bg-card">
+      <Link to={`/blog/${post.slug}`} className="flex h-full flex-col">
         <div className="relative overflow-hidden bg-surface">
           <RemoteImage
             src={post.image}
             alt={tx(post.imageAlt)}
             className={cn(
-              'w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]',
-              compact ? 'aspect-[16/9] min-h-[180px]' : 'aspect-[16/10] min-h-[240px]',
+              'h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]',
+              compact ? 'aspect-[16/9]' : 'aspect-[16/10]',
             )}
           />
         </div>
-        <div className={compact ? 'p-4' : 'p-6'}>
+        <div className={cn('flex flex-1 flex-col', compact ? 'p-4' : 'p-6')}>
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal">
             {category} · {formatDateLabel(post.date, locale)}
           </p>
