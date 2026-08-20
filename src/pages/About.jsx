@@ -6,59 +6,60 @@ import { DataFlow } from '../components/common/DataFlow';
 import { Button } from '../components/common/Button';
 import { FinalCta } from '../components/sections/FinalCta';
 import { Reveal } from '../components/motion/Reveal';
-import { values, workPrinciples } from '../data/company';
+import { localizedPrinciples, localizedValues } from '../i18n/data';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
+import { useI18n } from '../hooks/useI18n';
 
 const STORY_IMAGE =
   'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1800&q=80';
 
 export default function About() {
+  const { t, locale } = useI18n();
+  const values = localizedValues(locale);
+  const workPrinciples = localizedPrinciples(locale);
+
   useDocumentMeta({
-    title: 'About ZOSIMAS | Digital Solutions & Technology',
-    description: 'Learn how ZOSIMAS Digital Solution PLC approaches digital solutions, technology, and long-term product craft.',
+    title: t('aboutPage.metaTitle'),
+    description: t('aboutPage.metaDescription'),
   });
 
   return (
     <>
       <PageHero
         dark
-        eyebrow="About ZOSIMAS"
-        title="A technology company built around connection."
-        description="ZOSIMAS Digital Solution PLC designs and develops modern digital solutions across web, mobile, and AI. We help organizations innovate, build, and transform with purpose."
+        eyebrow={t('aboutPage.eyebrow')}
+        title={t('aboutPage.title')}
+        description={t('aboutPage.description')}
       />
 
-      <section className="bg-white py-20">
+      <section className="bg-page py-20">
         <Container className="grid items-center gap-12 lg:grid-cols-2">
           <div>
             <SectionHeading
-              eyebrow="Company story"
-              title="From idea to a connected system."
-              description="Organizations rarely need more software for its own sake. They need a clearer way of working — products, platforms, and intelligence that hold together."
+              eyebrow={t('aboutPage.storyEyebrow')}
+              title={t('aboutPage.storyTitle')}
+              description={t('aboutPage.storyDescription')}
             />
             <Reveal className="mt-6 space-y-4 text-sm leading-relaxed text-muted">
-              <p>
-                ZOSIMAS was formed around a simple conviction: digital work should feel like an extension of the business, not a separate layer of noise. That is why our visual language, engineering practice, and delivery model all start from connection.
-              </p>
-              <p>
-                We do not invent a catalogue of awards, clients, or scale. We focus on the craft of building systems that remain readable, maintainable, and useful.
-              </p>
+              <p>{t('aboutPage.storyP1')}</p>
+              <p>{t('aboutPage.storyP2')}</p>
             </Reveal>
           </div>
           <Reveal>
             <div className="relative">
               <span className="absolute -right-3 -top-3 hidden h-20 w-20 border border-teal/40 lg:block" aria-hidden="true" />
-              <span className="absolute -bottom-3 -left-3 hidden h-24 w-24 border border-navy/10 lg:block" aria-hidden="true" />
+              <span className="absolute -bottom-3 -left-3 hidden h-24 w-24 border border-ink/10 lg:block" aria-hidden="true" />
               <div className="relative overflow-hidden">
                 <img
                   src={STORY_IMAGE}
-                  alt="A bright, modern workspace representing connected digital work"
+                  alt={t('aboutPage.storyImageAlt')}
                   className="aspect-[4/5] max-h-[min(560px,70vh)] w-full object-cover"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,40,85,0.05)_20%,rgba(7,27,58,0.55)_100%)]" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
-                  <p className="text-[11px] font-semibold tracking-[0.2em] text-cyan">COMPANY STORY</p>
-                  <p className="mt-1 text-lg font-semibold text-white">From idea to a connected system.</p>
+                  <p className="text-[11px] font-semibold tracking-[0.2em] text-cyan">{t('aboutPage.storyCaption')}</p>
+                  <p className="mt-1 text-lg font-semibold text-white">{t('aboutPage.storyTitle')}</p>
                 </div>
               </div>
             </div>
@@ -68,31 +69,27 @@ export default function About() {
 
       <section className="bg-surface py-20">
         <Container className="grid gap-10 lg:grid-cols-2">
-          <article className="border border-line bg-white p-8">
-            <SectionHeading eyebrow="Mission" title="Technology with purpose." />
-            <p className="mt-4 text-sm leading-relaxed text-muted">
-              To design and deliver digital systems that help organizations operate with greater clarity, intelligence, and impact.
-            </p>
+          <article className="border border-line bg-card p-8">
+            <SectionHeading eyebrow={t('aboutPage.missionEyebrow')} title={t('aboutPage.missionTitle')} />
+            <p className="mt-4 text-sm leading-relaxed text-muted">{t('aboutPage.missionBody')}</p>
           </article>
-          <article className="border border-line bg-white p-8">
-            <SectionHeading eyebrow="Vision" title="Digital progress that lasts." />
-            <p className="mt-4 text-sm leading-relaxed text-muted">
-              A future where every organization can move forward with technology that is purposeful, scalable, and human-centered.
-            </p>
+          <article className="border border-line bg-card p-8">
+            <SectionHeading eyebrow={t('aboutPage.visionEyebrow')} title={t('aboutPage.visionTitle')} />
+            <p className="mt-4 text-sm leading-relaxed text-muted">{t('aboutPage.visionBody')}</p>
           </article>
         </Container>
       </section>
 
-      <section className="relative overflow-hidden bg-white py-20">
+      <section className="relative overflow-hidden bg-page py-20">
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/3 opacity-40 lg:block">
-          <GeometricPattern className="text-navy" />
+          <GeometricPattern className="text-ink" />
         </div>
         <Container>
-          <SectionHeading eyebrow="Values" title="How we choose to work." />
+          <SectionHeading eyebrow={t('aboutPage.valuesEyebrow')} title={t('aboutPage.valuesTitle')} />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((value) => (
               <article key={value.id} className="border border-line p-6">
-                <h3 className="text-lg font-semibold text-navy">{value.name}</h3>
+                <h3 className="text-lg font-semibold text-ink">{value.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{value.description}</p>
               </article>
             ))}
@@ -104,9 +101,9 @@ export default function About() {
         <Container>
           <SectionHeading
             light
-            eyebrow="How we work"
-            title="A calm, sequential delivery path."
-            description="Discovery, design, build, and refinement — each stage leaves a clearer system behind it."
+            eyebrow={t('aboutPage.workEyebrow')}
+            title={t('aboutPage.workTitle')}
+            description={t('aboutPage.workDescription')}
           />
           <div className="mt-12 grid gap-4 md:grid-cols-4">
             {workPrinciples.map((step, index) => (
@@ -120,27 +117,27 @@ export default function About() {
         </Container>
       </section>
 
-      <section className="bg-white py-20">
+      <section className="bg-page py-20">
         <Container className="grid items-center gap-12 lg:grid-cols-2">
           <div>
             <SectionHeading
-              eyebrow="Technology philosophy"
-              title="Intelligence should remain accountable."
-              description="We apply modern engineering and AI where they create operational value — with architecture, oversight, and a bias toward systems that people can still understand."
+              eyebrow={t('aboutPage.philosophyEyebrow')}
+              title={t('aboutPage.philosophyTitle')}
+              description={t('aboutPage.philosophyDescription')}
             />
             <div className="mt-8">
               <Button to="/services" arrow>
-                See our services
+                {t('aboutPage.seeServices')}
               </Button>
             </div>
           </div>
           <Reveal>
             <DataFlow
               steps={[
-                { id: 'people', label: 'People' },
-                { id: 'process', label: 'Process' },
-                { id: 'product', label: 'Product' },
-                { id: 'intelligence', label: 'Intelligence' },
+                { id: 'people', label: t('aboutPage.flow.people') },
+                { id: 'process', label: t('aboutPage.flow.process') },
+                { id: 'product', label: t('aboutPage.flow.product') },
+                { id: 'intelligence', label: t('aboutPage.flow.intelligence') },
               ]}
             />
           </Reveal>

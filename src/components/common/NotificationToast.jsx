@@ -3,10 +3,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { X } from 'lucide-react';
 import { clearNotification } from '../../store/slices/uiSlice';
+import { useI18n } from '../../hooks/useI18n';
 
 export function NotificationToast() {
   const dispatch = useDispatch();
   const notification = useSelector((state) => state.ui.notification);
+  const { t } = useI18n();
 
   useEffect(() => {
     if (!notification) return undefined;
@@ -20,16 +22,16 @@ export function NotificationToast() {
         <motion.div
           role="status"
           aria-live="polite"
-          className="fixed bottom-5 right-5 z-[60] max-w-sm border border-line bg-white px-4 py-3 shadow-[0_12px_40px_rgba(7,27,58,0.12)]"
+          className="fixed bottom-5 right-5 z-[60] max-w-sm border border-line bg-card px-4 py-3 shadow-[0_12px_40px_rgba(7,27,58,0.12)]"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 8 }}
         >
           <div className="flex items-start gap-3">
-            <p className="text-sm text-navy">{notification.message}</p>
+            <p className="text-sm text-ink">{notification.message}</p>
             <button
               type="button"
-              aria-label="Dismiss notification"
+              aria-label={t('common.dismiss')}
               className="text-muted"
               onClick={() => dispatch(clearNotification())}
             >

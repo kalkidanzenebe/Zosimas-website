@@ -6,9 +6,9 @@ import { buttonHover } from '../../lib/motion';
 
 const variants = {
   primary:
-    'bg-navy text-white hover:bg-navy-mid border border-navy',
+    'bg-navy text-white hover:bg-navy-mid border border-navy dark:bg-white dark:text-navy dark:hover:bg-surface dark:border-white',
   secondary:
-    'bg-transparent text-navy border border-navy/20 hover:border-teal hover:text-navy-dark',
+    'bg-transparent text-ink border border-ink/20 hover:border-teal hover:text-ink',
   ghost:
     'bg-transparent text-white border border-white/20 hover:border-cyan hover:text-cyan',
   light:

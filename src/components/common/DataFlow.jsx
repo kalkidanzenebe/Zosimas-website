@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '../../lib/utils';
+import { useI18n } from '../../hooks/useI18n';
 
 const STEPS = [
   { id: 'web', label: 'Web' },
@@ -11,8 +12,10 @@ const STEPS = [
 
 export function DataFlow({ className, dark = false, steps = STEPS }) {
   const prefersReduced = useReducedMotion();
-  const stroke = dark ? 'rgba(24,199,192,0.45)' : 'rgba(11,40,85,0.22)';
-  const fill = dark ? '#18C7C0' : '#0B2855';
+  const { theme } = useI18n();
+  const inkDark = dark || theme === 'dark';
+  const stroke = inkDark ? 'rgba(24,199,192,0.45)' : 'rgba(11,40,85,0.22)';
+  const fill = inkDark ? '#18C7C0' : '#0B2855';
   const width = steps.length * 140 - 40;
 
   return (
@@ -56,7 +59,7 @@ export function DataFlow({ className, dark = false, steps = STEPS }) {
               x={x}
               y="72"
               textAnchor="middle"
-              fill={dark ? '#F5F8FC' : '#0B2855'}
+              fill={inkDark ? '#F5F8FC' : '#0B2855'}
               fontSize="12"
               fontFamily="Plus Jakarta Sans, sans-serif"
               fontWeight="600"

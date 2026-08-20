@@ -3,35 +3,35 @@ import { SectionHeading } from '../common/SectionHeading';
 import { DataFlow } from '../common/DataFlow';
 import { Reveal } from '../motion/Reveal';
 import { Button } from '../common/Button';
-
-const story = [
-  { id: 'connected', label: 'Connected' },
-  { id: 'idea', label: 'Idea' },
-  { id: 'design', label: 'Design' },
-  { id: 'build', label: 'Build' },
-  { id: 'intelligence', label: 'Intelligence' },
-  { id: 'transformation', label: 'Transformation' },
-];
+import { useI18n } from '../../hooks/useI18n';
 
 export function CompanyIntro() {
+  const { t } = useI18n();
+  const story = [
+    { id: 'connected', label: t('intro.steps.connected') },
+    { id: 'idea', label: t('intro.steps.idea') },
+    { id: 'design', label: t('intro.steps.design') },
+    { id: 'build', label: t('intro.steps.build') },
+    { id: 'intelligence', label: t('intro.steps.intelligence') },
+    { id: 'transformation', label: t('intro.steps.transformation') },
+  ];
+
   return (
-    <section className="overflow-x-hidden bg-white py-16 lg:flex lg:min-h-[100dvh] lg:flex-col lg:justify-center lg:py-16">
+    <section className="overflow-x-hidden bg-page py-16 lg:flex lg:min-h-[100dvh] lg:flex-col lg:justify-center lg:py-16">
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-6">
             <SectionHeading
-              eyebrow="Introduction"
-              title="A connected way to design, build, and transform."
-              description="ZOSIMAS exists to help organizations move from fragmented tools and analogue processes to digital systems that are coherent, intelligent, and ready for use."
+              eyebrow={t('intro.eyebrow')}
+              title={t('intro.title')}
+              description={t('intro.description')}
             />
           </div>
           <Reveal className="lg:col-span-5 lg:col-start-8">
-            <p className="text-sm leading-relaxed text-muted">
-              We work across web, mobile, and AI with a single visual and engineering language: networks, structure, and motion with purpose. The result is technology that feels considered — and remains useful after launch.
-            </p>
+            <p className="text-sm leading-relaxed text-muted">{t('intro.body')}</p>
             <div className="mt-6">
               <Button to="/about" variant="secondary" arrow>
-                About ZOSIMAS
+                {t('intro.about')}
               </Button>
             </div>
           </Reveal>

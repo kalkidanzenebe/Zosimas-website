@@ -1,12 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { validateContactForm } from '../../lib/utils';
+import { t } from '../../i18n/t';
 
 export const submitContact = createAsyncThunk(
   'contact/submit',
-  async (formValues, { rejectWithValue }) => {
-    const errors = validateContactForm(formValues);
+  async (formValues, { rejectWithValue, getState }) => {
+    const locale = getState().preferences?.locale || 'en';
+    const errors = validateContactForm(formValues, locale);
     if (Object.keys(errors).length > 0) {
-      return rejectWithValue({ type: 'validation', errors });
+      return rejectWithValue({
+        type: 'validation',
+        errors,
+        message: t(locale, 'form.validationSummary'),
+      });
     }
 
     await new Promise((resolve) => setTimeout(resolve, 900));
@@ -62,9 +68,9 @@ const contactSlice = createSlice({
         state.status = 'error';
         if (action.payload?.type === 'validation') {
           state.fieldErrors = action.payload.errors;
-          state.error = 'Please review the highlighted fields.';
+          state.error = action.payload.message;
         } else {
-          state.error = 'Something went wrong. Please try again.';
+          state.error = action.payload?.message || 'Something went wrong. Please try again.';
         }
       });
   },

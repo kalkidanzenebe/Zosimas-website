@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import logoSrc from '../../assets/logo/logo.jpg';
+import { useI18n } from '../../hooks/useI18n';
 
 export function LogoMark({ className }) {
   return (
@@ -15,7 +16,8 @@ export function LogoMark({ className }) {
 }
 
 export function Logo({ to = '/', compact = false, className, onClick, light = false }) {
-  const word = light ? 'text-white' : 'text-navy';
+  const { t } = useI18n();
+  const word = light ? 'text-white' : 'text-ink';
   const sub = light ? 'text-cyan/80' : 'text-muted';
 
   const content = (
@@ -25,7 +27,7 @@ export function Logo({ to = '/', compact = false, className, onClick, light = fa
         <span className={cn('text-[15px] font-extrabold tracking-[0.18em]', word)}>ZOSIMAS</span>
         {!compact && (
           <span className={cn('mt-1 text-[9px] font-medium uppercase tracking-[0.22em]', sub)}>
-            Digital Solution
+            {t('logo.digital')}
           </span>
         )}
       </span>
@@ -36,7 +38,7 @@ export function Logo({ to = '/', compact = false, className, onClick, light = fa
 
   if (to) {
     return (
-      <Link to={to} className={classes} aria-label="ZOSIMAS Digital Solution PLC home" onClick={onClick}>
+      <Link to={to} className={classes} aria-label={t('logo.home')} onClick={onClick}>
         {content}
       </Link>
     );

@@ -4,18 +4,21 @@ import { useDispatch } from 'react-redux';
 import { X } from 'lucide-react';
 import { Logo } from '../common/Logo';
 import { Button } from '../common/Button';
-import { navItems } from '../../data/navigation';
+import { localizedNav } from '../../i18n/data';
 import { closeMobileMenu } from '../../store/slices/uiSlice';
 import { useScrollLock } from '../../hooks/useScrollLock';
+import { useI18n } from '../../hooks/useI18n';
 import { staggerFast } from '../../lib/motion';
 
 export function MobileMenu() {
   const dispatch = useDispatch();
+  const { t } = useI18n();
+  const items = localizedNav(t);
   useScrollLock(true);
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 bg-navy-dark lg:hidden"
+      className="fixed inset-0 z-50 overflow-y-auto bg-navy-dark xl:hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -26,20 +29,20 @@ export function MobileMenu() {
         <button
           type="button"
           className="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-white"
-          aria-label="Close menu"
+          aria-label={t('nav.closeMenu')}
           onClick={() => dispatch(closeMobileMenu())}
         >
           <X className="h-5 w-5" />
         </button>
       </div>
       <motion.nav
-        className="flex flex-col gap-2 px-5 pt-10"
-        aria-label="Mobile"
+        className="flex flex-col gap-2 px-5 pt-6 pb-12"
+        aria-label={t('nav.mobile')}
         variants={staggerFast}
         initial="hidden"
         animate="visible"
       >
-        {navItems.map((item) => (
+        {items.map((item) => (
           <motion.div key={item.to} variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
             <NavLink
               to={item.to}
@@ -55,7 +58,7 @@ export function MobileMenu() {
         ))}
         <motion.div className="pt-8" variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
           <Button to="/contact" variant="light" arrow onClick={() => dispatch(closeMobileMenu())}>
-            Start a Project
+            {t('nav.startProject')}
           </Button>
         </motion.div>
       </motion.nav>

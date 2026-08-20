@@ -16,7 +16,7 @@ export function PageHero({
     <section
       className={cn(
         'relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-20',
-        dark ? 'bg-navy-dark text-white' : 'bg-surface text-navy',
+        dark ? 'bg-navy-dark text-white' : 'bg-surface text-ink',
       )}
     >
       <div className="pointer-events-none absolute -right-16 top-8 hidden w-[340px] opacity-40 lg:block">

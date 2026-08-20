@@ -6,22 +6,14 @@ import { Container } from '../common/Container';
 import { Badge } from '../common/SectionHeading';
 import { Button } from '../common/Button';
 import { ServiceVisual } from '../common/ServiceVisual';
-import { services } from '../../data/services';
+import { localizedServices } from '../../i18n/data';
 import { cn } from '../../lib/utils';
 import { Reveal } from '../motion/Reveal';
-
-const railLabels = {
-  'web-development': 'Web',
-  'mobile-development': 'Mobile',
-  'ai-solutions': 'AI',
-  'custom-software': 'Software',
-  'ui-ux': 'Design',
-  'digital-transformation': 'Transform',
-  cloud: 'Cloud',
-  'it-consulting': 'Consulting',
-};
+import { useI18n } from '../../hooks/useI18n';
 
 export function ServicesPreview() {
+  const { t, locale } = useI18n();
+  const services = localizedServices(locale);
   const [index, setIndex] = useState(0);
   const [width, setWidth] = useState(0);
   const viewportRef = useRef(null);
@@ -80,16 +72,16 @@ export function ServicesPreview() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <Reveal>
-              <Badge light>Services</Badge>
+              <Badge light>{t('homeServices.eyebrow')}</Badge>
             </Reveal>
             <Reveal delay={0.08}>
               <h2 className="mt-5 text-3xl font-bold tracking-tight sm:text-4xl lg:text-[44px] lg:leading-[1.12]">
-                Built as a system, not a menu.
+                {t('homeServices.title')}
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-white/70">
-                Slide through the practice. Each capability is a node in the same system — interface, product, intelligence, and infrastructure designed to connect.
+                {t('homeServices.description')}
               </p>
             </Reveal>
           </div>
@@ -97,7 +89,7 @@ export function ServicesPreview() {
             <div className="flex gap-2">
               <button
                 type="button"
-                aria-label="Previous service"
+                aria-label={t('common.previousService')}
                 onClick={() => paginate(-1)}
                 className="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-white transition-colors hover:border-cyan hover:text-cyan"
               >
@@ -105,7 +97,7 @@ export function ServicesPreview() {
               </button>
               <button
                 type="button"
-                aria-label="Next service"
+                aria-label={t('common.nextService')}
                 onClick={() => paginate(1)}
                 className="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-white transition-colors hover:border-cyan hover:text-cyan"
               >
@@ -113,7 +105,7 @@ export function ServicesPreview() {
               </button>
             </div>
             <Button to="/services" variant="ghost" arrow>
-              All services
+              {t('common.allServices')}
             </Button>
           </Reveal>
         </div>
@@ -122,7 +114,7 @@ export function ServicesPreview() {
           ref={viewportRef}
           className="mt-14 overflow-hidden"
           aria-roledescription="carousel"
-          aria-label="Services"
+          aria-label={t('common.servicesCarousel')}
           aria-live="polite"
           onKeyDown={(event) => {
             if (event.key === 'ArrowRight') paginate(1);
@@ -173,7 +165,7 @@ export function ServicesPreview() {
                     className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-cyan"
                     tabIndex={service.id === active.id ? 0 : -1}
                   >
-                    Explore {service.name}
+                    {t('homeServices.explore', { name: service.name })}
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
                 </div>
@@ -193,7 +185,7 @@ export function ServicesPreview() {
             }}
             aria-hidden="true"
           />
-          <div role="tablist" aria-label="Service slides" className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-4 lg:grid-cols-8 lg:bg-transparent lg:gap-0">
+          <div role="tablist" aria-label={t('common.serviceSlides')} className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-4 lg:grid-cols-8 lg:bg-transparent lg:gap-0">
             {services.map((service, serviceIndex) => {
               const selected = serviceIndex === index;
               return (
@@ -215,7 +207,7 @@ export function ServicesPreview() {
                     )}
                     aria-hidden="true"
                   />
-                  <span className="mt-1 block text-sm font-semibold">{railLabels[service.id]}</span>
+                  <span className="mt-1 block text-sm font-semibold">{t(`homeServices.rails.${service.id}`)}</span>
                   {selected && (
                     <motion.span
                       layoutId={prefersReduced ? undefined : 'service-underline'}

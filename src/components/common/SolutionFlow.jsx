@@ -1,11 +1,14 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '../../lib/utils';
+import { useI18n } from '../../hooks/useI18n';
 
 export function SolutionFlow({ steps, className, dark = false }) {
   const prefersReduced = useReducedMotion();
-  const text = dark ? '#F5F8FC' : '#0B2855';
-  const muted = dark ? 'rgba(245,248,252,0.62)' : '#4A6280';
-  const line = dark ? 'rgba(24,199,192,0.45)' : 'rgba(11,40,85,0.2)';
+  const { theme } = useI18n();
+  const inkDark = dark || theme === 'dark';
+  const text = inkDark ? '#F5F8FC' : '#0B2855';
+  const muted = inkDark ? 'rgba(245,248,252,0.62)' : '#4A6280';
+  const line = inkDark ? 'rgba(24,199,192,0.45)' : 'rgba(11,40,85,0.2)';
 
   return (
     <svg
@@ -37,7 +40,7 @@ export function SolutionFlow({ steps, className, dark = false }) {
               cx={x}
               cy="70"
               r="10"
-              fill={index === steps.length - 1 ? '#13B8B2' : dark ? '#18C7C0' : '#0B2855'}
+              fill={index === steps.length - 1 ? '#13B8B2' : inkDark ? '#18C7C0' : '#0B2855'}
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}

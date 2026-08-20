@@ -2,35 +2,39 @@ import { PageHero } from '../components/common/PageHero';
 import { Container } from '../components/common/Container';
 import { Button } from '../components/common/Button';
 import { FinalCta } from '../components/sections/FinalCta';
-import { services } from '../data/services';
+import { localizedServices } from '../i18n/data';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
+import { useI18n } from '../hooks/useI18n';
 import { cn } from '../lib/utils';
 
 export default function Services() {
+  const { t, locale } = useI18n();
+  const services = localizedServices(locale);
+
   useDocumentMeta({
-    title: 'Digital Services | Web, Mobile, AI & Software',
-    description: 'Explore ZOSIMAS services across web development, mobile, AI, custom software, design, cloud, and IT consulting.',
+    title: t('servicesPage.metaTitle'),
+    description: t('servicesPage.metaDescription'),
   });
 
   return (
     <>
       <PageHero
         visual="none"
-        eyebrow="Services"
-        title="A connected practice across web, mobile, and AI."
-        description="Each service is designed as part of the same system: interfaces, platforms, intelligence, and the architecture that holds them together."
+        eyebrow={t('servicesPage.eyebrow')}
+        title={t('servicesPage.title')}
+        description={t('servicesPage.description')}
       />
       {services.map((service, index) => {
         const reversed = index % 2 === 1;
         return (
-          <section key={service.id} id={service.id} className={cn('py-20', index % 2 === 0 ? 'bg-white' : 'bg-surface')}>
+          <section key={service.id} id={service.id} className={cn('py-20', index % 2 === 0 ? 'bg-page' : 'bg-surface')}>
             <Container className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
               <div className={reversed ? 'lg:order-2' : ''}>
-                <h2 className="text-3xl font-bold text-navy">{service.name}</h2>
+                <h2 className="text-3xl font-bold text-ink">{service.name}</h2>
                 <p className="mt-4 text-base leading-relaxed text-muted">{service.description}</p>
                 <div className="mt-8 grid gap-8 sm:grid-cols-2">
                   <div>
-                    <h3 className="text-sm font-semibold text-navy">Capabilities</h3>
+                    <h3 className="text-sm font-semibold text-ink">{t('servicesPage.capabilities')}</h3>
                     <ul className="mt-3 space-y-2 text-sm text-muted">
                       {service.capabilities.map((item) => (
                         <li key={item}>— {item}</li>
@@ -38,15 +42,15 @@ export default function Services() {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-navy">Business value</h3>
+                    <h3 className="text-sm font-semibold text-ink">{t('servicesPage.businessValue')}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-muted">{service.businessValue}</p>
-                    <h3 className="mt-6 text-sm font-semibold text-navy">Technologies</h3>
+                    <h3 className="mt-6 text-sm font-semibold text-ink">{t('servicesPage.technologies')}</h3>
                     <p className="mt-3 text-sm text-muted">{service.technologies.join(' · ')}</p>
                   </div>
                 </div>
                 <div className="mt-8">
                   <Button to="/contact" arrow>
-                    Discuss this service
+                    {t('servicesPage.discuss')}
                   </Button>
                 </div>
               </div>

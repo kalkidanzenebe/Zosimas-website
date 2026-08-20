@@ -3,6 +3,7 @@ import { useId, useMemo } from 'react';
 import { useFinePointer, useIsMobile } from '../../hooks/useMediaQuery';
 import { usePointerParallax } from '../../hooks/usePointerParallax';
 import { cn } from '../../lib/utils';
+import { useI18n } from '../../hooks/useI18n';
 
 const VARIANT_PRESETS = {
   hero: { density: 'high', speed: 1, interactive: true, tone: 'light' },
@@ -96,13 +97,15 @@ export function DigitalNetwork({
   const prefersReduced = useReducedMotion();
   const isMobile = useIsMobile();
   const finePointer = useFinePointer();
+  const { theme } = useI18n();
   const preset = VARIANT_PRESETS[variant] || VARIANT_PRESETS.hero;
 
   const resolvedDensity = density || (isMobile ? 'low' : preset.density);
   const resolvedSpeed = speed ?? preset.speed;
   const resolvedInteractive = interactive ?? preset.interactive;
   const tone = preset.tone;
-  const dark = tone === 'dark';
+  const pageDark = theme === 'dark' && ['compact', 'about', 'services'].includes(variant);
+  const dark = tone === 'dark' || pageDark;
   const accent = color || (dark ? '#18C7C0' : '#13B8B2');
   const line = dark ? 'rgba(24,199,192,0.28)' : 'rgba(11,40,85,0.18)';
   const nodeFill = dark ? '#18C7C0' : '#0B2855';

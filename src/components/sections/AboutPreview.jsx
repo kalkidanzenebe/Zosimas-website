@@ -2,19 +2,21 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Container } from '../common/Container';
 import { Badge } from '../common/SectionHeading';
 import { Button } from '../common/Button';
-import { values } from '../../data/company';
 import { Reveal } from '../motion/Reveal';
+import { localizedValues } from '../../i18n/data';
+import { useI18n } from '../../hooks/useI18n';
+import { company } from '../../data/navigation';
 
 const ABOUT_IMAGE =
   'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=80';
 
-const previewValues = values.slice(0, 4);
-
 export function AboutPreview() {
   const prefersReduced = useReducedMotion();
+  const { t, locale } = useI18n();
+  const previewValues = localizedValues(locale).slice(0, 4);
 
   return (
-    <section className="flex min-h-[100dvh] flex-col justify-center overflow-x-hidden bg-white py-16 lg:py-16">
+    <section className="flex min-h-[100dvh] flex-col justify-center overflow-x-hidden bg-page py-16 lg:py-16">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <Reveal className="relative lg:col-span-5">
@@ -28,7 +30,7 @@ export function AboutPreview() {
               >
                 <img
                   src={ABOUT_IMAGE}
-                  alt="Contemporary architecture representing structured, long-term digital systems"
+                  alt={t('homeAbout.imageAlt')}
                   className="aspect-[4/5] max-h-[min(520px,62vh)] w-full object-cover"
                   loading="lazy"
                 />
@@ -39,8 +41,8 @@ export function AboutPreview() {
                   <circle cx="300" cy="250" r="4" fill="#18C7C0" />
                 </svg>
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                  <p className="text-[11px] font-semibold tracking-[0.22em] text-cyan">WEB • MOBILE • AI</p>
-                  <p className="mt-2 text-xl font-semibold text-white">Innovate. Build. Transform.</p>
+                  <p className="text-[11px] font-semibold tracking-[0.22em] text-cyan">{company.brandLine}</p>
+                  <p className="mt-2 text-xl font-semibold text-white">{t('brand.tagline')}</p>
                 </div>
               </motion.div>
             </div>
@@ -48,37 +50,37 @@ export function AboutPreview() {
 
           <div className="lg:col-span-7">
             <Reveal>
-              <Badge>About</Badge>
+              <Badge>{t('homeAbout.eyebrow')}</Badge>
             </Reveal>
             <Reveal delay={0.08}>
-              <h2 className="mt-5 max-w-xl text-3xl font-bold tracking-tight text-navy sm:text-4xl lg:text-[44px] lg:leading-[1.12]">
-                Technology with purpose.
+              <h2 className="mt-5 max-w-xl text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-[44px] lg:leading-[1.12]">
+                {t('homeAbout.title')}
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-                We treat digital work as infrastructure for the organization: products, platforms, and intelligence that should remain coherent as the business grows.
+                {t('homeAbout.description')}
               </p>
             </Reveal>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
               <Reveal delay={0.08} className="border-l-2 border-teal bg-surface p-6">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-teal">Mission</p>
-                <p className="mt-3 text-sm leading-relaxed text-navy">
-                  Design and deliver digital systems that help organizations operate with greater clarity, intelligence, and impact.
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-teal">{t('homeAbout.mission')}</p>
+                <p className="mt-3 text-sm leading-relaxed text-ink">
+                  {t('homeAbout.missionBody')}
                 </p>
               </Reveal>
               <Reveal delay={0.14} className="border-l-2 border-navy bg-navy p-6 text-white">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan">Vision</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan">{t('homeAbout.vision')}</p>
                 <p className="mt-3 text-sm leading-relaxed text-white/75">
-                  A future where every organization can move forward with technology that is purposeful, scalable, and human-centered.
+                  {t('homeAbout.visionBody')}
                 </p>
               </Reveal>
             </div>
 
             <div className="mt-8">
               <Button to="/about" arrow>
-                Our story
+                {t('homeAbout.ourStory')}
               </Button>
             </div>
           </div>
@@ -88,10 +90,10 @@ export function AboutPreview() {
           <div className="pointer-events-none absolute inset-x-0 top-5 hidden h-px bg-line lg:block" aria-hidden="true" />
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {previewValues.map((value, index) => (
-              <Reveal key={value.id} delay={index * 0.06} className="relative bg-white pt-2 lg:bg-transparent">
+              <Reveal key={value.id} delay={index * 0.06} className="relative bg-page pt-2 lg:bg-transparent">
                 <span className="mb-4 hidden h-2.5 w-2.5 bg-teal lg:block" aria-hidden="true" />
                 <p className="font-mono text-[11px] tracking-[0.18em] text-teal">0{index + 1}</p>
-                <h3 className="mt-3 text-lg font-semibold text-navy">{value.name}</h3>
+                <h3 className="mt-3 text-lg font-semibold text-ink">{value.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{value.description}</p>
               </Reveal>
             ))}

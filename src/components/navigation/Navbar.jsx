@@ -6,10 +6,12 @@ import { Menu } from 'lucide-react';
 import { Logo } from '../common/Logo';
 import { Button } from '../common/Button';
 import { Container } from '../common/Container';
+import { SiteControls } from '../common/SiteControls';
 import { MobileMenu } from './MobileMenu';
-import { navItems } from '../../data/navigation';
+import { localizedNav } from '../../i18n/data';
 import { cn } from '../../lib/utils';
 import { openMobileMenu } from '../../store/slices/uiSlice';
+import { useI18n } from '../../hooks/useI18n';
 
 export function Navbar() {
   const dispatch = useDispatch();
@@ -17,7 +19,9 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const prefersReduced = useReducedMotion();
   const location = useLocation();
+  const { t } = useI18n();
   const darkHero = location.pathname === '/';
+  const items = localizedNav(t);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -34,16 +38,16 @@ export function Navbar() {
         className={cn(
           'fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300',
           scrolled || mobileMenuOpen
-            ? 'border-b border-line/80 bg-white/90 shadow-[0_8px_30px_rgba(7,27,58,0.06)] backdrop-blur-md'
+            ? 'border-b border-line/80 bg-page/90 shadow-[0_8px_30px_rgba(7,27,58,0.06)] backdrop-blur-md dark:shadow-[0_8px_30px_rgba(0,0,0,0.28)]'
             : inverted
               ? 'border-b border-transparent bg-transparent'
-              : 'border-b border-transparent bg-white/70 backdrop-blur-sm',
+              : 'border-b border-transparent bg-page/70 backdrop-blur-sm',
         )}
       >
-        <Container className="flex h-[72px] items-center justify-between">
+        <Container className="flex h-[72px] items-center justify-between gap-3">
           <Logo light={inverted} />
-          <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
-            {navItems.map((item) => (
+          <nav className="hidden items-center gap-5 xl:flex xl:gap-6" aria-label={t('nav.primary')}>
+            {items.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
@@ -51,8 +55,8 @@ export function Navbar() {
                 className={({ isActive }) =>
                   cn(
                     'relative py-1 text-sm font-medium tracking-wide transition-colors',
-                    inverted ? 'text-white/80 hover:text-white' : 'text-navy/70 hover:text-navy',
-                    isActive && (inverted ? 'text-white' : 'text-navy'),
+                    inverted ? 'text-white/80 hover:text-white' : 'text-ink/70 hover:text-ink',
+                    isActive && (inverted ? 'text-white' : 'text-ink'),
                   )
                 }
               >
@@ -71,23 +75,27 @@ export function Navbar() {
               </NavLink>
             ))}
           </nav>
-          <div className="hidden lg:block">
+          <div className="hidden items-center gap-3 xl:flex">
+            <SiteControls inverted={inverted} />
             <Button to="/contact" variant={inverted ? 'ghost' : 'primary'} arrow>
-              Start a Project
+              {t('nav.startProject')}
             </Button>
           </div>
-          <button
-            type="button"
-            className={cn(
-              'inline-flex h-11 w-11 items-center justify-center border lg:hidden',
-              inverted ? 'border-white/20 text-white' : 'border-line text-navy',
-            )}
-            aria-label="Open menu"
-            aria-expanded={mobileMenuOpen}
-            onClick={() => dispatch(openMobileMenu())}
-          >
-            <Menu className="h-5 w-5" />
-          </button>
+          <div className="flex items-center gap-2 xl:hidden">
+            <SiteControls inverted={inverted} />
+            <button
+              type="button"
+              className={cn(
+                'inline-flex h-11 w-11 items-center justify-center border',
+                inverted ? 'border-white/20 text-white' : 'border-line text-ink',
+              )}
+              aria-label={t('nav.openMenu')}
+              aria-expanded={mobileMenuOpen}
+              onClick={() => dispatch(openMobileMenu())}
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+          </div>
         </Container>
       </motion.header>
       <AnimatePresence>{mobileMenuOpen && <MobileMenu />}</AnimatePresence>

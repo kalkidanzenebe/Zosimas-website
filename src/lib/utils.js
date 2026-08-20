@@ -1,3 +1,5 @@
+import { t } from '../i18n/t';
+
 export function cn(...classes) {
   return classes.filter(Boolean).join(' ');
 }
@@ -9,37 +11,39 @@ export function isTouchDevice() {
 
 export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function validateContactForm(values) {
+export function validateContactForm(values, locale = 'en') {
   const errors = {};
 
   if (!values.fullName?.trim() || values.fullName.trim().length < 2) {
-    errors.fullName = 'Please enter your full name.';
+    errors.fullName = t(locale, 'validation.fullName');
   }
 
   if (!values.email?.trim()) {
-    errors.email = 'Please enter your email address.';
+    errors.email = t(locale, 'validation.emailRequired');
   } else if (!emailPattern.test(values.email.trim())) {
-    errors.email = 'Please enter a valid email address.';
+    errors.email = t(locale, 'validation.emailInvalid');
   }
 
   if (values.phone?.trim() && !/^[+\d][\d\s()-]{6,}$/.test(values.phone.trim())) {
-    errors.phone = 'Please enter a valid phone number.';
+    errors.phone = t(locale, 'validation.phone');
   }
 
   if (!values.service) {
-    errors.service = 'Please select a service.';
+    errors.service = t(locale, 'validation.service');
   }
 
   if (!values.message?.trim() || values.message.trim().length < 20) {
-    errors.message = 'Please share a little more about your project (at least 20 characters).';
+    errors.message = t(locale, 'validation.message');
   }
 
   return errors;
 }
 
-export function formatDateLabel(date) {
-  return new Intl.DateTimeFormat('en', {
+export function formatDateLabel(date, locale = 'en') {
+  const value = date instanceof Date ? date : new Date(date);
+  return new Intl.DateTimeFormat(locale === 'am' ? 'am-ET' : 'en', {
+    day: 'numeric',
     month: 'short',
     year: 'numeric',
-  }).format(date);
+  }).format(value);
 }

@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", "Noto Sans Ethiopic", ui-sans-serif, system-ui, sans-serif;
 
   --color-navy: #0b2855;
   --color-navy-dark: #071b3a;
@@ -9,6 +11,8 @@
   --color-navy-soft: #163a6e;
   --color-teal: #13b8b2;
   --color-cyan: #18c7c0;
+  --color-page: #ffffff;
+  --color-card: #ffffff;
   --color-surface: #f5f8fc;
   --color-ink: #0b2855;
   --color-muted: #4a6280;
@@ -18,8 +22,24 @@
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+html.dark {
+  color-scheme: dark;
+  --color-page: #071b3a;
+  --color-card: #0b2855;
+  --color-surface: #0a234d;
+  --color-ink: #e8eef6;
+  --color-muted: #9bb0c9;
+  --color-line: #1e3f6c;
+  --color-line-strong: #2a5488;
+}
+
+html[lang="am"] body {
+  font-family: "Noto Sans Ethiopic", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -46,7 +66,7 @@ body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  background: #ffffff;
+  background: var(--color-page);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

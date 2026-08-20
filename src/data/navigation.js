@@ -15,6 +15,7 @@ export const navItems = [
   { label: 'Services', to: '/services' },
   { label: 'Solutions', to: '/solutions' },
   { label: 'Projects', to: '/projects' },
+  { label: 'Blog', to: '/blog' },
   { label: 'Careers', to: '/careers' },
   { label: 'Contact', to: '/contact' },
 ];
@@ -25,6 +26,7 @@ export const footerNav = [
   { label: 'Services', to: '/services' },
   { label: 'Solutions', to: '/solutions' },
   { label: 'Projects', to: '/projects' },
+  { label: 'Blog', to: '/blog' },
   { label: 'Careers', to: '/careers' },
   { label: 'Contact', to: '/contact' },
 ];

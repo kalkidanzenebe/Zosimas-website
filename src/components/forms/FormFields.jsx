@@ -13,7 +13,7 @@ export function FormInput({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="text-sm font-medium text-navy">
+      <label htmlFor={id} className="text-sm font-medium text-ink">
         {label}
         {required && <span className="text-teal"> *</span>}
       </label>
@@ -29,12 +29,12 @@ export function FormInput({
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : undefined}
         className={cn(
-          'h-12 border bg-white px-3 text-sm text-navy outline-none transition-colors placeholder:text-muted/70',
-          error ? 'border-teal' : 'border-line focus:border-navy',
+          'h-12 border bg-card px-3 text-sm text-ink outline-none transition-colors placeholder:text-muted/70',
+          error ? 'border-teal' : 'border-line focus:border-teal',
         )}
       />
       {error && (
-        <p id={`${id}-error`} className="text-xs text-navy">
+        <p id={`${id}-error`} className="text-xs text-ink">
           {error}
         </p>
       )}
@@ -45,7 +45,7 @@ export function FormInput({
 export function FormSelect({ id, label, value, onChange, options, error, required, placeholder = 'Select' }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="text-sm font-medium text-navy">
+      <label htmlFor={id} className="text-sm font-medium text-ink">
         {label}
         {required && <span className="text-teal"> *</span>}
       </label>
@@ -58,8 +58,8 @@ export function FormSelect({ id, label, value, onChange, options, error, require
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : undefined}
         className={cn(
-          'h-12 border bg-white px-3 text-sm text-navy outline-none transition-colors',
-          error ? 'border-teal' : 'border-line focus:border-navy',
+          'h-12 border bg-card px-3 text-sm text-ink outline-none transition-colors',
+          error ? 'border-teal' : 'border-line focus:border-teal',
         )}
       >
         <option value="">{placeholder}</option>
@@ -70,7 +70,7 @@ export function FormSelect({ id, label, value, onChange, options, error, require
         ))}
       </select>
       {error && (
-        <p id={`${id}-error`} className="text-xs text-navy">
+        <p id={`${id}-error`} className="text-xs text-ink">
           {error}
         </p>
       )}
@@ -81,7 +81,7 @@ export function FormSelect({ id, label, value, onChange, options, error, require
 export function FormTextarea({ id, label, value, onChange, error, required, rows = 6, placeholder }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="text-sm font-medium text-navy">
+      <label htmlFor={id} className="text-sm font-medium text-ink">
         {label}
         {required && <span className="text-teal"> *</span>}
       </label>
@@ -96,12 +96,12 @@ export function FormTextarea({ id, label, value, onChange, error, required, rows
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : undefined}
         className={cn(
-          'resize-y border bg-white px-3 py-3 text-sm text-navy outline-none transition-colors placeholder:text-muted/70',
-          error ? 'border-teal' : 'border-line focus:border-navy',
+          'resize-y border bg-card px-3 py-3 text-sm text-ink outline-none transition-colors placeholder:text-muted/70',
+          error ? 'border-teal' : 'border-line focus:border-teal',
         )}
       />
       {error && (
-        <p id={`${id}-error`} className="text-xs text-navy">
+        <p id={`${id}-error`} className="text-xs text-ink">
           {error}
         </p>
       )}

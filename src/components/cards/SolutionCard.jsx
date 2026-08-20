@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { Icon } from '../common/Icon';
+import { useI18n } from '../../hooks/useI18n';
 
 export function SolutionCard({ solution }) {
   const prefersReduced = useReducedMotion();
+  const { t } = useI18n();
 
   return (
     <motion.article
@@ -22,7 +24,7 @@ export function SolutionCard({ solution }) {
         {solution.description}
       </p>
       <Link to="/solutions" className="mt-6 inline-flex text-sm font-semibold text-cyan">
-        View solution
+        {t('common.viewSolution')}
       </Link>
     </motion.article>
   );
