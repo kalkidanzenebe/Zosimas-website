@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react';
 import { Logo } from '../../components/common/Logo';
 import { Button } from '../../components/common/Button';
 import { FormInput } from '../../components/forms/FormInput';
@@ -12,6 +13,7 @@ export default function AdminLogin() {
   const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [checking, setChecking] = useState(true);
@@ -81,15 +83,32 @@ export default function AdminLogin() {
               required
               autoComplete="username"
             />
-            <FormInput
-              id="password"
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              required
-              autoComplete="current-password"
-            />
+            <div className="flex flex-col gap-2">
+              <label htmlFor="password" className="text-sm font-medium text-ink">
+                Password
+                <span className="text-teal"> *</span>
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
+                  autoComplete="current-password"
+                  className="h-12 w-full border border-line bg-card px-3 pr-12 text-sm text-ink outline-none transition-colors placeholder:text-muted/70 focus:border-teal"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((open) => !open)}
+                  className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-muted hover:text-ink"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
           </div>
           {error && <p className="mt-4 text-sm text-ink">{error}</p>}
           <div className="mt-8">
