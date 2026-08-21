@@ -4,7 +4,7 @@ import { Container } from '../../components/common/Container';
 import { Button } from '../../components/common/Button';
 import { FormInput } from '../../components/forms/FormInput';
 import { FormTextarea } from '../../components/forms/FormTextarea';
-import { createAdminPost, fetchAdminPost, updateAdminPost } from '../../lib/api';
+import { createAdminPost, fetchAdminPost, mediaUrl, updateAdminPost } from '../../lib/api';
 import { serializeBody, slugify } from '../../lib/postBody';
 import { useDocumentMeta } from '../../hooks/useDocumentMeta';
 
@@ -73,7 +73,7 @@ export default function AdminPostForm() {
         if (cancelled) return;
         const next = fromPost(data.post);
         setForm(next);
-        setImagePreview(next.image);
+        setImagePreview(mediaUrl(next.image));
       })
       .catch((err) => {
         if (!cancelled) setError(err.message || 'Could not load this post.');
@@ -232,7 +232,7 @@ export default function AdminPostForm() {
               value={form.image}
               onChange={(event) => {
                 setForm((current) => ({ ...current, image: event.target.value }));
-                if (!imageFile) setImagePreview(event.target.value);
+                if (!imageFile) setImagePreview(mediaUrl(event.target.value) || event.target.value);
               }}
               placeholder="https://"
             />

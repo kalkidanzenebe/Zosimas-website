@@ -4,11 +4,13 @@ import { ArrowUpRight } from 'lucide-react';
 import { useI18n } from '../../hooks/useI18n';
 import { formatDateLabel } from '../../lib/utils';
 import { cn } from '../../lib/utils';
+import { mediaUrl } from '../../lib/api';
 
 export function RemoteImage({ src, alt, className }) {
   const [failed, setFailed] = useState(false);
+  const resolved = mediaUrl(src);
 
-  if (failed || !src) {
+  if (failed || !resolved) {
     return (
       <div
         className={cn(
@@ -24,7 +26,8 @@ export function RemoteImage({ src, alt, className }) {
 
   return (
     <img
-      src={src}
+      key={resolved}
+      src={resolved}
       alt={alt}
       className={className}
       loading="lazy"

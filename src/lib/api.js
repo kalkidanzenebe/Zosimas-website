@@ -1,3 +1,34 @@
+const API_BASE = String(import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+const TOKEN_KEY = 'zosimas_admin_token';
+
+export function apiUrl(path) {
+  return `${API_BASE}${path}`;
+}
+
+export function mediaUrl(src) {
+  if (!src) return src;
+  if (/^(https?:|blob:|data:)/i.test(src)) return src;
+  const path = src.startsWith('/') ? src : `/${src}`;
+  return `${API_BASE}${path}`;
+}
+
+function getToken() {
+  try {
+    return window.localStorage.getItem(TOKEN_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function setToken(token) {
+  try {
+    if (token) window.localStorage.setItem(TOKEN_KEY, token);
+    else window.localStorage.removeItem(TOKEN_KEY);
+  } catch {
+    // Ignore private-mode storage errors.
+  }
+}
+
 async function parseJson(res) {
   try {
     return await res.json();
@@ -8,11 +39,13 @@ async function parseJson(res) {
 
 export async function api(path, options = {}) {
   const { json, headers, ...rest } = options;
-  const res = await fetch(path, {
+  const token = getToken();
+  const res = await fetch(apiUrl(path), {
     credentials: 'include',
     ...rest,
     headers: {
       ...(json !== undefined ? { 'Content-Type': 'application/json' } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
     body: json !== undefined ? JSON.stringify(json) : rest.body,
@@ -35,7 +68,7 @@ export async function fetchPublishedPosts(fallbackPosts) {
 
 export async function fetchPublishedPost(slug, fallbackPost) {
   try {
-    const res = await fetch(`/api/posts/${encodeURIComponent(slug)}`, { credentials: 'include' });
+    const res = await fetch(apiUrl(`/api/posts/${encodeURIComponent(slug)}`), { credentials: 'include' });
     if (res.status === 404) return null;
     const data = await parseJson(res);
     if (!res.ok) throw new Error(data.error);
@@ -49,12 +82,18 @@ export function fetchAdminMe() {
   return api('/api/auth/me');
 }
 
-export function loginAdmin(email, password) {
-  return api('/api/auth/login', { method: 'POST', json: { email, password } });
+export async function loginAdmin(email, password) {
+  const data = await api('/api/auth/login', { method: 'POST', json: { email, password } });
+  if (data.token) setToken(data.token);
+  return data;
 }
 
-export function logoutAdmin() {
-  return api('/api/auth/logout', { method: 'POST', json: {} });
+export async function logoutAdmin() {
+  try {
+    await api('/api/auth/logout', { method: 'POST', json: {} });
+  } finally {
+    setToken(null);
+  }
 }
 
 export function fetchAdminPosts() {

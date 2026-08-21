@@ -48,18 +48,22 @@ authRouter.post(
     const token = signAdminToken({ sub: admin.id, email: admin.email });
     res.cookie(ADMIN_COOKIE, token, {
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: isProduction ? 'none' : 'lax',
       secure: isProduction,
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: '/',
     });
 
-    res.json({ admin: { id: admin.id, email: admin.email } });
+    res.json({ admin: { id: admin.id, email: admin.email }, token });
   }),
 );
 
 authRouter.post('/logout', (_req, res) => {
-  res.clearCookie(ADMIN_COOKIE, { path: '/' });
+  res.clearCookie(ADMIN_COOKIE, {
+    path: '/',
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction,
+  });
   res.json({ ok: true });
 });
 
