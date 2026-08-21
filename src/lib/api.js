@@ -39,17 +39,25 @@ async function parseJson(res) {
 
 export async function api(path, options = {}) {
   const { json, headers, ...rest } = options;
+  if (!API_BASE && import.meta.env.PROD) {
+    throw new Error('API URL is missing. Set VITE_API_URL on Vercel to https://zosimas-website.onrender.com and redeploy.');
+  }
   const token = getToken();
-  const res = await fetch(apiUrl(path), {
-    credentials: 'include',
-    ...rest,
-    headers: {
-      ...(json !== undefined ? { 'Content-Type': 'application/json' } : {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...headers,
-    },
-    body: json !== undefined ? JSON.stringify(json) : rest.body,
-  });
+  let res;
+  try {
+    res = await fetch(apiUrl(path), {
+      credentials: 'include',
+      ...rest,
+      headers: {
+        ...(json !== undefined ? { 'Content-Type': 'application/json' } : {}),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...headers,
+      },
+      body: json !== undefined ? JSON.stringify(json) : rest.body,
+    });
+  } catch {
+    throw new Error('Cannot reach the API. Wait about a minute for Render to wake, then try again.');
+  }
   const data = await parseJson(res);
   if (!res.ok) {
     throw new Error(data.error || 'Request failed.');

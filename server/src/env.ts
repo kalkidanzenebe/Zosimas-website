@@ -13,6 +13,21 @@ function required(name: string): string {
   return value;
 }
 
+function parseOrigins() {
+  const fromEnv = (process.env.CLIENT_ORIGIN || 'http://localhost:5173')
+    .split(',')
+    .map((value) => value.trim().replace(/\/$/, ''))
+    .filter(Boolean);
+
+  return Array.from(
+    new Set([
+      ...fromEnv,
+      'http://localhost:5173',
+      'https://zosimas-website.vercel.app',
+    ]),
+  );
+}
+
 export const env = {
   port: Number(process.env.PORT) || 4000,
   nodeEnv: process.env.NODE_ENV || 'development',
@@ -20,7 +35,19 @@ export const env = {
   jwtSecret: required('JWT_SECRET'),
   adminEmail: required('ADMIN_EMAIL').toLowerCase(),
   adminPassword: required('ADMIN_PASSWORD'),
-  clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
+  clientOrigins: parseOrigins(),
 };
 
 export const isProduction = env.nodeEnv === 'production';
+
+export function isAllowedOrigin(origin?: string | string[]) {
+  const value = Array.isArray(origin) ? origin[0] : origin;
+  if (!value) return true;
+  if (env.clientOrigins.includes(value)) return true;
+  try {
+    const host = new URL(value).hostname;
+    return host === 'zosimas-website.vercel.app' || host.endsWith('.vercel.app');
+  } catch {
+    return false;
+  }
+}

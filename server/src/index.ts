@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import multer from 'multer';
-import { env } from './env.js';
+import { env, isAllowedOrigin } from './env.js';
 import { prisma } from './prisma.js';
 import { authRouter, ensureAdmin } from './routes/auth.js';
 import { postsRouter } from './routes/posts.js';
@@ -15,8 +15,12 @@ const app = express();
 app.set('trust proxy', 1);
 app.use(
   cors({
-    origin: env.clientOrigin,
+    origin(origin, callback) {
+      callback(null, isAllowedOrigin(origin));
+    },
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   }),
 );
 app.use(cookieParser());
