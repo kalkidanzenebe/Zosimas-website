@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { Eye, EyeOff, LoaderCircle } from 'lucide-react';
 import { Logo } from '../../components/common/Logo';
 import { Button } from '../../components/common/Button';
 import { FormInput } from '../../components/forms/FormInput';
 import { ThemeToggle } from '../../components/common/SiteControls';
 import { fetchAdminMe, loginAdmin } from '../../lib/api';
+import { showNotification } from '../../store/slices/uiSlice';
 import { useDocumentMeta } from '../../hooks/useDocumentMeta';
+import { NotificationToast } from '../../components/common/NotificationToast';
+import { AdminLoading } from '../../components/admin/AdminLoading';
 
 export default function AdminLogin() {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -33,8 +38,8 @@ export default function AdminLogin() {
 
   if (checking) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-page text-sm text-muted">
-        Loading…
+      <div className="flex min-h-screen items-center justify-center bg-page">
+        <AdminLoading label="Checking admin session…" />
       </div>
     );
   }
@@ -49,9 +54,12 @@ export default function AdminLogin() {
     setSubmitting(true);
     try {
       await loginAdmin(email, password);
+      dispatch(showNotification({ type: 'success', message: 'Signed in successfully.' }));
       navigate(location.state?.from || '/admin', { replace: true });
     } catch (err) {
-      setError(err.message || 'Could not sign in.');
+      const message = err.message || 'Could not sign in.';
+      setError(message);
+      dispatch(showNotification({ type: 'error', message }));
     } finally {
       setSubmitting(false);
     }
@@ -113,11 +121,19 @@ export default function AdminLogin() {
           {error && <p className="mt-4 text-sm text-ink">{error}</p>}
           <div className="mt-8">
             <Button type="submit" disabled={submitting} className="w-full">
-              {submitting ? 'Signing in…' : 'Sign in'}
+              {submitting ? (
+                <span className="inline-flex items-center gap-2">
+                  <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+                  Signing in…
+                </span>
+              ) : (
+                'Sign in'
+              )}
             </Button>
           </div>
         </form>
       </div>
+      <NotificationToast />
     </div>
   );
 }

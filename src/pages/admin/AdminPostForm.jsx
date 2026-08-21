@@ -1,11 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { LoaderCircle } from 'lucide-react';
 import { Container } from '../../components/common/Container';
 import { Button } from '../../components/common/Button';
 import { FormInput } from '../../components/forms/FormInput';
 import { FormTextarea } from '../../components/forms/FormTextarea';
+import { AdminLoading } from '../../components/admin/AdminLoading';
 import { createAdminPost, fetchAdminPost, mediaUrl, updateAdminPost } from '../../lib/api';
 import { serializeBody, slugify } from '../../lib/postBody';
+import { showNotification } from '../../store/slices/uiSlice';
 import { useDocumentMeta } from '../../hooks/useDocumentMeta';
 
 const emptyForm = {
@@ -52,6 +56,7 @@ export default function AdminPostForm() {
   const { id } = useParams();
   const isEdit = Boolean(id);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [form, setForm] = useState(emptyForm);
   const [slugTouched, setSlugTouched] = useState(isEdit);
   const [loading, setLoading] = useState(isEdit);
@@ -76,7 +81,14 @@ export default function AdminPostForm() {
         setImagePreview(mediaUrl(next.image));
       })
       .catch((err) => {
-        if (!cancelled) setError(err.message || 'Could not load this post.');
+        if (!cancelled) {
+          dispatch(
+            showNotification({
+              type: 'error',
+              message: err.message || 'Could not load this post.',
+            }),
+          );
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -108,6 +120,7 @@ export default function AdminPostForm() {
     const file = event.target.files?.[0];
     if (!file) return;
     setImageFile(file);
+    dispatch(showNotification({ type: 'success', message: 'Cover image selected.' }));
     setImagePreview((current) => {
       if (current?.startsWith('blob:')) URL.revokeObjectURL(current);
       return URL.createObjectURL(file);
@@ -118,6 +131,7 @@ export default function AdminPostForm() {
     event.preventDefault();
     setError('');
     if (!imageFile && !form.image) {
+      dispatch(showNotification({ type: 'error', message: 'Upload a cover image or paste an image URL.' }));
       setError('Upload a cover image or paste an image URL.');
       return;
     }
@@ -129,12 +143,16 @@ export default function AdminPostForm() {
     try {
       if (isEdit) {
         await updateAdminPost(id, payload, imageFile);
+        dispatch(showNotification({ type: 'success', message: 'Article updated.' }));
       } else {
         await createAdminPost(payload, imageFile);
+        dispatch(showNotification({ type: 'success', message: 'Article created.' }));
       }
       navigate('/admin');
     } catch (err) {
-      setError(err.message || 'Could not save this post.');
+      const message = err.message || 'Could not save this post.';
+      setError(message);
+      dispatch(showNotification({ type: 'error', message }));
     } finally {
       setSaving(false);
     }
@@ -144,7 +162,7 @@ export default function AdminPostForm() {
     return (
       <section className="py-12">
         <Container>
-          <p className="text-sm text-muted">Loading post…</p>
+          <AdminLoading label="Loading post…" />
         </Container>
       </section>
     );
@@ -263,7 +281,16 @@ export default function AdminPostForm() {
 
           <div className="flex flex-wrap gap-3">
             <Button type="submit" disabled={saving}>
-              {saving ? 'Saving…' : isEdit ? 'Save changes' : 'Create post'}
+              {saving ? (
+                <span className="inline-flex items-center gap-2">
+                  <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+                  Saving…
+                </span>
+              ) : isEdit ? (
+                'Save changes'
+              ) : (
+                'Create post'
+              )}
             </Button>
             <Button to="/admin" variant="secondary">
               Cancel

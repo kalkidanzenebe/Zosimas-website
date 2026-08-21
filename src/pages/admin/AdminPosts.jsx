@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Container } from '../../components/common/Container';
 import { Button } from '../../components/common/Button';
+import { AdminLoading } from '../../components/admin/AdminLoading';
+import { ConfirmDialog } from '../../components/admin/ConfirmDialog';
 import { deleteAdminPost, fetchAdminPosts } from '../../lib/api';
+import { showNotification } from '../../store/slices/uiSlice';
 import { useDocumentMeta } from '../../hooks/useDocumentMeta';
 import { formatDateLabel } from '../../lib/utils';
 
 export default function AdminPosts() {
+  const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [pendingDelete, setPendingDelete] = useState(null);
+  const [deleting, setDeleting] = useState(false);
 
   useDocumentMeta({
     title: 'Blog admin | ZOSIMAS',
@@ -17,12 +23,17 @@ export default function AdminPosts() {
   });
 
   async function loadPosts() {
-    setError('');
+    setLoading(true);
     try {
       const data = await fetchAdminPosts();
       setPosts(data.posts ?? []);
     } catch (err) {
-      setError(err.message || 'Could not load posts.');
+      dispatch(
+        showNotification({
+          type: 'error',
+          message: err.message || 'Could not load posts.',
+        }),
+      );
     } finally {
       setLoading(false);
     }
@@ -32,13 +43,28 @@ export default function AdminPosts() {
     loadPosts();
   }, []);
 
-  async function handleDelete(post) {
-    if (!window.confirm(`Delete “${post.title.en}”? This cannot be undone.`)) return;
+  async function confirmDelete() {
+    if (!pendingDelete) return;
+    setDeleting(true);
     try {
-      await deleteAdminPost(post.id);
-      setPosts((current) => current.filter((item) => item.id !== post.id));
+      await deleteAdminPost(pendingDelete.id);
+      setPosts((current) => current.filter((item) => item.id !== pendingDelete.id));
+      dispatch(
+        showNotification({
+          type: 'success',
+          message: `"${pendingDelete.title.en}" was deleted.`,
+        }),
+      );
+      setPendingDelete(null);
     } catch (err) {
-      setError(err.message || 'Could not delete that post.');
+      dispatch(
+        showNotification({
+          type: 'error',
+          message: err.message || 'Could not delete that post.',
+        }),
+      );
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -54,10 +80,8 @@ export default function AdminPosts() {
           <Button to="/admin/posts/new">New post</Button>
         </div>
 
-        {error && <p className="mt-6 text-sm text-ink">{error}</p>}
-
         {loading ? (
-          <p className="mt-10 text-sm text-muted">Loading posts…</p>
+          <AdminLoading label="Loading posts…" />
         ) : posts.length === 0 ? (
           <p className="mt-10 text-sm text-muted">No posts yet. Create the first article.</p>
         ) : (
@@ -92,8 +116,8 @@ export default function AdminPosts() {
                         )}
                         <button
                           type="button"
-                          onClick={() => handleDelete(post)}
-                          className="font-semibold text-muted hover:text-ink"
+                          onClick={() => setPendingDelete(post)}
+                          className="inline-flex items-center gap-1 font-semibold text-muted hover:text-ink"
                         >
                           Delete
                         </button>
@@ -106,6 +130,22 @@ export default function AdminPosts() {
           </div>
         )}
       </Container>
+
+      <ConfirmDialog
+        open={Boolean(pendingDelete)}
+        title="Delete this article?"
+        description={
+          pendingDelete
+            ? `“${pendingDelete.title.en}” will be removed from the blog. This cannot be undone.`
+            : ''
+        }
+        confirmLabel="Delete article"
+        busy={deleting}
+        onCancel={() => {
+          if (!deleting) setPendingDelete(null);
+        }}
+        onConfirm={confirmDelete}
+      />
     </section>
   );
 }

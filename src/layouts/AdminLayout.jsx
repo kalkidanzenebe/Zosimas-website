@@ -4,10 +4,14 @@ import { fetchAdminMe, logoutAdmin } from '../lib/api';
 import { Logo } from '../components/common/Logo';
 import { ThemeToggle } from '../components/common/SiteControls';
 import { NotificationToast } from '../components/common/NotificationToast';
+import { AdminLoading } from '../components/admin/AdminLoading';
+import { showNotification } from '../store/slices/uiSlice';
+import { useDispatch } from 'react-redux';
 
 export default function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -31,16 +35,17 @@ export default function AdminLayout() {
   async function handleLogout() {
     try {
       await logoutAdmin();
+      dispatch(showNotification({ type: 'success', message: 'Signed out.' }));
     } catch {
-      // Cookie is cleared server-side even if the request is retried.
+      dispatch(showNotification({ type: 'success', message: 'Signed out.' }));
     }
     navigate('/admin/login', { replace: true });
   }
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-page text-sm text-muted">
-        Checking admin session…
+      <div className="flex min-h-screen items-center justify-center bg-page">
+        <AdminLoading label="Checking admin session…" />
       </div>
     );
   }
