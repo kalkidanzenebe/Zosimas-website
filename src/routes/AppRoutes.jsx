@@ -3,6 +3,9 @@ import { Route, Routes } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import AdminLayout from '../layouts/AdminLayout';
 import Home from '../pages/Home';
+import AdminLogin from '../pages/admin/AdminLogin';
+import AdminPosts from '../pages/admin/AdminPosts';
+import AdminPostForm from '../pages/admin/AdminPostForm';
 import { useI18n } from '../hooks/useI18n';
 
 const About = lazy(() => import('../pages/About'));
@@ -14,9 +17,6 @@ const BlogPost = lazy(() => import('../pages/BlogPost'));
 const Careers = lazy(() => import('../pages/Careers'));
 const Contact = lazy(() => import('../pages/Contact'));
 const NotFound = lazy(() => import('../pages/NotFound'));
-const AdminLogin = lazy(() => import('../pages/admin/AdminLogin'));
-const AdminPosts = lazy(() => import('../pages/admin/AdminPosts'));
-const AdminPostForm = lazy(() => import('../pages/admin/AdminPostForm'));
 
 function PageFallback() {
   const { t } = useI18n();
